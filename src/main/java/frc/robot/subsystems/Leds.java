@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,7 +40,9 @@ public class Leds extends SubsystemBase {
 
   public void setWarningColor(Color color){
     LEDPattern pattern = LEDPattern.solid(color);
+    pattern = pattern.synchronizedBlink(RobotController::getRSLState);
     pattern.applyTo(m_warningView);
+
   }
   public Command setWarningRed(){
     return run(() -> setWarningColor(Color.kDarkBlue));
